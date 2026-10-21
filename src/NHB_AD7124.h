@@ -309,9 +309,12 @@ public:
     };
 
     //Sets configuration reg values
-    int setConfig(AD7124_RefSources ref, AD7124_GainSel gain, bool bipolar, 
-                  AD7124_BurnoutCurrents burnout = AD7124_Burnout_Off, 
-                  double exRefV = 2.50);
+    //refBuffers: the reference buffers need 100mV headroom to AVDD/AVSS,
+    //disable them for a reference tied to the supply (e.g. ratiometric bridge
+    //excitation from AVDD to PSW)
+    int setConfig(AD7124_RefSources ref, AD7124_GainSel gain, bool bipolar,
+                  AD7124_BurnoutCurrents burnout = AD7124_Burnout_Off,
+                  double exRefV = 2.50, bool refBuffers = true);
 
     //Sets the filter type and output word rate for a setup
     int setFilter(AD7124_Filters filter, uint16_t fs, 

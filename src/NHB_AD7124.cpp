@@ -34,7 +34,7 @@
 // Sets configuration reg values
 int Ad7124Setup::setConfig(AD7124_RefSources ref, AD7124_GainSel gain,
                            bool bipolar, AD7124_BurnoutCurrents burnout,
-                           double exRefV)
+                           double exRefV, bool refBuffers)
 {
 
   // Store these away for easy access later (this is a bit redundant, should
@@ -52,7 +52,7 @@ int Ad7124Setup::setConfig(AD7124_RefSources ref, AD7124_GainSel gain,
                              AD7124_CFG_REG_PGA(gain) |
                              (bipolar ? AD7124_CFG_REG_BIPOLAR : 0) |
                              AD7124_CFG_REG_BURNOUT(burnout) |
-                             AD7124_CFG_REG_REF_BUFP | AD7124_CFG_REG_REF_BUFM |
+                             (refBuffers ? (AD7124_CFG_REG_REF_BUFP | AD7124_CFG_REG_REF_BUFM) : 0) |
                              AD7124_CFG_REG_AIN_BUFP | AD7124_CFG_REG_AINN_BUFM;
 
   return _driver->writeRegister((AD7124_regIDs)reg);
